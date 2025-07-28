@@ -1,11 +1,10 @@
 // lib/auth.ts
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import bcrypt from "bcryptjs"
-import { AuthOptions, getServerSession } from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
-import GoogleProvider from "next-auth/providers/google"
-import { prisma } from "./prisma"
-
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import bcrypt from "bcryptjs";
+import { AuthOptions, getServerSession } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import { prisma } from "./prisma";
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -22,23 +21,26 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password are required")
+          throw new Error("Email and password are required");
         }
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
-        })
+        });
 
         if (!user || !user.passwordHash) {
-          throw new Error("No user found")
+          throw new Error("No user found");
         }
 
-        const isValid = await bcrypt.compare(credentials.password, user.passwordHash)
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.passwordHash
+        );
         if (!isValid) {
-          throw new Error("Invalid password")
+          throw new Error("Invalid password");
         }
 
-        return user
+        return user;
       },
     }),
   ],
@@ -46,20 +48,20 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
   },
   pages: {
-    signIn: "/auth/signin", // nếu bạn muốn tuỳ chỉnh giao diện đăng nhập
+    signIn: "/auth/signin",
   },
   callbacks: {
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.sub
+        session.user.id = token.sub;
       }
-      return session
+      return session;
     },
     async jwt({ token }) {
-      return token
+      return token;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-}
+};
 
-export const auth = () => getServerSession(authOptions)
+export const auth = () => getServerSession(authOptions);
