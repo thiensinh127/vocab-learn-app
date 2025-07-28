@@ -1,41 +1,41 @@
 "use client";
 
-import { BellIcon, MoonIcon, SunIcon } from "lucide-react";
+import { MoonIcon, SunIcon } from "lucide-react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import SignInFormModal from "./auth/SignInFormModal";
+import RegisterFormModal from "./auth/RegisterFormModal";
 
 export default function Header() {
-  const navigate = useRouter();
-
   const { theme, setTheme } = useTheme();
   const { data: session } = useSession();
+
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
 
   const user = session?.user;
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 h-16 flex items-center justify-between px-4 sm:px-6 py-4 border-b bg-white dark:bg-gray-800">
+      <header className="fixed top-0 left-0 right-0 z-40 h-16 flex items-center justify-between px-4 sm:px-6 py-4  bg-background dark:bg-background">
         <div className="flex items-center gap-4 w-full max-w-md">
           <Image
             src="/logo.png"
             alt="Logo"
-            width={40}
-            height={40}
+            width={180}
+            height={180}
             className="hidden sm:block"
           />
         </div>
 
-        <div className="flex items-center gap-4 w-full">
-          <Input placeholder="Search here..." className="w-full" />
-
+        <div className="flex items-center gap-4 w-full justify-end">
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="text-gray-700 dark:text-gray-300"
+            className="text-gray-700 dark:text-gray-300 cursor-pointer"
             aria-label="Toggle Theme"
           >
             {theme === "dark" ? (
@@ -61,15 +61,39 @@ export default function Header() {
                 className="text-xs"
                 onClick={() => signOut()}
               >
-                Đăng xuất
+                Logout
               </Button>
             </div>
           ) : (
-            <Button size="sm" onClick={() => navigate.push("/signin")}>
-              Đăng nhập
+            <Button
+              className="cursor-pointer"
+              size="sm"
+              onClick={() => setOpenLogin(true)}
+            >
+              Login
             </Button>
           )}
         </div>
+        {openLogin && (
+          <SignInFormModal
+            open={openLogin}
+            onClose={() => setOpenLogin(false)}
+            onSwitchToRegister={() => {
+              setOpenLogin(false);
+              setOpenRegister(true);
+            }}
+          />
+        )}
+        {openRegister && (
+          <RegisterFormModal
+            open={openRegister}
+            onClose={() => setOpenRegister(false)}
+            onSwitchToLogin={() => {
+              setOpenRegister(false);
+              setOpenLogin(true);
+            }}
+          />
+        )}
       </header>
     </>
   );

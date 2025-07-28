@@ -1,7 +1,7 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: "class", 
+  darkMode: "class",
   content: [
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -11,22 +11,41 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#2563eb",
-          light: "#3b82f6",
-          dark: "#1e40af",
+          light: "#FDE68A",
+          dark: "#A78BFA",
         },
         background: {
-          light: "#ffffff",
-          dark: "#0f172a",
+          light: "#F9FAFB",
+          dark: "#0F0F1B",
+        },
+        card: {
+          light: "#FFFFFF",
+          dark: "#1C1C2A",
         },
         text: {
-          light: "#1f2937",
-          dark: "#f1f5f9",
+          light: "#111827",
+          dark: "#F3F4F6",
         },
+        accent: {
+          yellow: "#FFD95A",
+          purple: "#C084FC",
+        },
+      },
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+      },
+      borderRadius: {
+        xl: "1rem",
+        "2xl": "1.25rem",
+      },
+      boxShadow: {
+        soft: "0 4px 12px rgba(0,0,0,0.05)",
+        glow: "0 0 10px rgba(192, 132, 252, 0.6)",
       },
     },
   },
-  plugins: [],
-}
 
-export default config
+  plugins: [],
+};
+
+export default config;

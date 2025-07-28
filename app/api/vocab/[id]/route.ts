@@ -37,7 +37,6 @@ export async function DELETE(
   if (!session || !session.user?.id) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-
   await prisma.vocabulary.delete({
     where: { id: params.id },
   });
