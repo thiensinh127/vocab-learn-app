@@ -6,19 +6,24 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignInFormModal from "./auth/SignInFormModal";
 import RegisterFormModal from "./auth/RegisterFormModal";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
   const { data: session } = useSession();
-
+  const [mounted, setMounted] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
 
   const user = session?.user;
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-40 h-16 flex items-center justify-between px-4 sm:px-6 py-4  bg-background dark:bg-background">

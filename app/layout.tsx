@@ -22,13 +22,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${plusJakarta.variable} light`}
-      style={{ colorScheme: "light" }}
-    >
+    <html lang="en" suppressHydrationWarning>
       <body
-        className="bg-background dark:bg-background"
+        className={`${plusJakarta.variable}`}
         data-new-gr-c-s-check-loaded="14.1112.0"
         data-gr-ext-installed=""
       >
@@ -37,9 +33,7 @@ export default function RootLayout({
             <Sidebar />
             <main className="flex-1">
               <Header />
-              <div className="p-6 space-y-6 ml-[60px] mt-[64px]">
-                {children}
-              </div>
+              <div className="mt-[64px]">{children}</div>
             </main>
           </div>
         </Providers>

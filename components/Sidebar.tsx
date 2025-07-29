@@ -9,39 +9,70 @@ import { RiSettings3Fill } from "react-icons/ri";
 
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 const navItems = [
-  { icon: <HiMiniHome size={24} />, label: "Dashboard", href: "/" },
-  { icon: <FaThList size={24} />, label: "Topics", href: "/topics" }, // { icon: <FaThList size={24} />, label: "Leaderboard", href: "/list" },
-  {
-    icon: <ImBook size={24} />,
-    label: "Flashcards",
-    href: "/flashcards",
-  },
+  { icon: <HiMiniHome size={24} />, label: "Dashboard", href: "/dashboard" },
+  { icon: <FaThList size={24} />, label: "Topics", href: "/topics" },
+  { icon: <ImBook size={24} />, label: "Flashcards", href: "/flashcards" },
   { icon: <FaBrain size={24} />, label: "Quick", href: "/quick" },
   { icon: <RiSettings3Fill size={24} />, label: "Settings", href: "/settings" },
-  { icon: <IoLogOut size={24} />, label: "Sign Out" },
 ];
 
 export default function Sidebar() {
+  const pathName = usePathname();
+
   return (
-    <aside className="fixed top-[64px] left-12 bottom-0 z-50 w-16 bg-white dark:bg-foreground shadow-md p-6 flex flex-col justify-between items-center rounded-3xl h-[80%] my-auto ">
+    <aside
+      className="fixed top-[64px] left-12 bottom-0 z-50 w-16 p-6 flex flex-col justify-between items-center gap-8 rounded-3xl h-[calc(100%-112px)] my-auto border-border shadow-md"
+      style={{ background: "var(--sidebar-gradient)" }}
+    >
       <div className="space-y-2">
-        {navItems.map(({ icon: Icon, label, href = "" }, idx) => (
-          <div key={idx} className="">
-            <Tooltip>
-              <TooltipTrigger>
-                <Link
-                  href={(href as string) || "#"}
-                  className="flex  items-center justify-center p-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
-                >
-                  <div className="shrink-0"> {Icon}</div>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">{label}</TooltipContent>
-            </Tooltip>
-          </div>
-        ))}
+        {navItems.map(({ icon: Icon, label, href = "" }, idx) => {
+          const isActive = pathName === href;
+
+          return (
+            <div key={idx}>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Link
+                    href={href || "#"}
+                    className={clsx(
+                      "flex items-center space-x-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 tracking-wide",
+                      isActive
+                        ? "bg-gradient-indigo-purple text-white shadow-lg"
+                        : "text-gray-600 hover:bg-white/50 dark:text-gray-300 dark:hover:bg-slate-700/50"
+                    )}
+                  >
+                    <div className="shrink-0">{Icon}</div>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="text-sm font-medium">
+                  {label}
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          );
+        })}
+      </div>
+      <div>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className="flex cursor-pointer items-center justify-center p-3 rounded-md transition-all text-gray-600 hover:bg-white/50 dark:text-gray-300 dark:hover:bg-slate-700/50"
+              // onClick={() => {
+              //   // TODO: Add actual logout logic
+              //   console.log("Logging out...");
+              // }}
+            >
+              <IoLogOut size={24} />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="text-sm font-medium">
+            Sign Out
+          </TooltipContent>
+        </Tooltip>
       </div>
     </aside>
   );
