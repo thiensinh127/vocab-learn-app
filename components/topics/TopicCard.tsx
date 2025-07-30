@@ -8,6 +8,7 @@ import {
   Play,
   Trash2,
 } from "lucide-react";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -46,7 +47,8 @@ export function TopicCard({
   onDelete,
   onStudy,
 }: TopicCardProps) {
-  const progress = (topic.learnedWords / topic.totalWords) * 100;
+  const progress =
+    topic.totalWords > 0 ? (topic.learnedWords / topic.totalWords) * 100 : 0;
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -149,14 +151,21 @@ export function TopicCard({
             </div>
           </div>
 
-          {/* Action Button */}
-          <Button
-            onClick={() => onStudy(topic.id)}
-            className="w-full bg-gradient-indigo-purple hover:opacity-90"
-          >
-            <Play className="h-4 w-4 mr-2" />
-            Continue Learning
-          </Button>
+          {/* Action Buttons */}
+          <div className="grid grid-cols-2 gap-2">
+            <Link href={`/topics/${topic.id}`}>
+              <Button variant="outline" className="w-full bg-transparent">
+                <BookOpen className="h-4 w-4 mr-2" />
+                Manage
+              </Button>
+            </Link>
+            <Link href={`/topics/${topic.id}/flashcards`}>
+              <Button className="w-full bg-gradient-indigo-purple hover:opacity-90">
+                <Play className="h-4 w-4 mr-2" />
+                Study
+              </Button>
+            </Link>
+          </div>
         </div>
       </CardContent>
     </Card>

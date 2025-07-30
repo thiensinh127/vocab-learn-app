@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
 const navItems = [
-  { icon: <HiMiniHome size={24} />, label: "Dashboard", href: "/dashboard" },
+  { icon: <HiMiniHome size={24} />, label: "Dashboard", href: "/" },
   { icon: <FaThList size={24} />, label: "Topics", href: "/topics" },
   { icon: <ImBook size={24} />, label: "Flashcards", href: "/flashcards" },
   { icon: <FaBrain size={24} />, label: "Quick", href: "/quick" },
@@ -21,7 +21,7 @@ const navItems = [
 ];
 
 export default function Sidebar() {
-  const pathName = usePathname();
+  const pathName = usePathname().split("/")[1];
 
   return (
     <aside
@@ -30,7 +30,7 @@ export default function Sidebar() {
     >
       <div className="space-y-2">
         {navItems.map(({ icon: Icon, label, href = "" }, idx) => {
-          const isActive = pathName === href;
+          const isActive = pathName === href.split("/")[1];
 
           return (
             <div key={idx}>
