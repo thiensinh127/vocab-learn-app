@@ -7,7 +7,8 @@ export interface Vocabulary {
   example?: string | null;
   known?: boolean | null;
   topic?: string | null;
-  userId: string;
-  createdAt: Date;
+  userId?: string;
+  createdAt?: Date;
   image?: string | null;
+  difficulty: "Easy" | "Medium" | "Hard";
 }
