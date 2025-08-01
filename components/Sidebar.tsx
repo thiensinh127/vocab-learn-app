@@ -6,6 +6,7 @@ import { HiMiniHome } from "react-icons/hi2";
 import { ImBook } from "react-icons/im";
 import { IoLogOut } from "react-icons/io5";
 import { RiSettings3Fill } from "react-icons/ri";
+import { LuListTodo } from "react-icons/lu";
 
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
@@ -14,9 +15,10 @@ import clsx from "clsx";
 
 const navItems = [
   { icon: <HiMiniHome size={24} />, label: "Dashboard", href: "/" },
+  { icon: <LuListTodo size={24} />, label: "Todo List", href: "/todo" },
   { icon: <FaThList size={24} />, label: "Topics", href: "/topics" },
-  { icon: <ImBook size={24} />, label: "Flashcards", href: "/flashcards" },
-  { icon: <FaBrain size={24} />, label: "Quick", href: "/quick" },
+  // { icon: <ImBook size={24} />, label: "Flashcards", href: "/flashcards" },
+  { icon: <FaBrain size={24} />, label: "Quick Game", href: "/quick" },
   { icon: <RiSettings3Fill size={24} />, label: "Settings", href: "/settings" },
 ];
 
