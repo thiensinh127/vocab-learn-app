@@ -183,7 +183,7 @@ export default function FlashcardsPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pl-[112px]">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+      <header className="bg-gray-50 dark:bg-gray-900  px-6 py-4">
         <div className="flex items- justify-between">
           <div className="flex-1">
             <StudySessionHeader
@@ -200,7 +200,7 @@ export default function FlashcardsPage() {
       </header>
 
       {/* Main Content */}
-      <main className="p-6">
+      <main className="p-6 ">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Flashcard */}
           <div className="flex justify-center">

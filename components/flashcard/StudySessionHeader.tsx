@@ -1,9 +1,11 @@
 "use client";
 
-import { Clock, Target, Trophy } from "lucide-react";
+import { ArrowLeft, Clock, Target, Trophy } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { StudySettingsDialog } from "./StudySettingsDialog";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 interface StudySessionHeaderProps {
   topicName: string;
@@ -36,16 +38,24 @@ export function StudySessionHeader({
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4 justify-between w-full">
-          <div>
-            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white tracking-wide">
-              {topicName}
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 font-light">
-              Flashcard Study Session
-            </p>
+      <div className="flex items-center justify-between ">
+        <div className="flex items-center space-x-4 justify-between w-full bg-white dark:bg-gray-800 py-4 px-6 rounded-2xl">
+          <div className="flex items-center space-x-4 ">
+            <Link href="/topics">
+              <Button variant="ghost" size="icon" className="cursor-pointer">
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+            </Link>
+            <div>
+              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white tracking-wide">
+                {topicName}
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 font-light">
+                Flashcard Study Session
+              </p>
+            </div>
           </div>
+
           <StudySettingsDialog
             settings={settings}
             onSettingsChange={onSettingsChange}
